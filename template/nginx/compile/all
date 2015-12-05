@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+COMPRESS_DIR=$( cd "$( dirname "${CURRENT_DIR}" )" && pwd )
+
+for version in $(cat versions); do
+    if [ ! -z "${version}" ]; then
+        ${CURRENT_DIR}/build ${version}
+        
+        tar -zcvf ${OPENSHIFT_REPO_DIR}/nginx/nginx-${version}.tar.gz ${OPENSHIFT_REPO_DIR}/nginx/nginx-${version}
+		if [ ! -d "${OPENSHIFT_REPO_DIR}/public" ]; then
+  			mkdir ${OPENSHIFT_REPO_DIR}/public
+		fi
+		cp ${OPENSHIFT_REPO_DIR}/nginx/nginx-${version}.tar.gz ${OPENSHIFT_REPO_DIR}/public/
+    fi
+done
+
+

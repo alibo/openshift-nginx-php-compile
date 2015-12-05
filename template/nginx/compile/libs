@@ -1,0 +1,82 @@
+#!/bin/bash
+set -e
+
+# Include common setup
+source common
+
+# Import utils
+source build_util
+
+# Set build dir
+BUILD_DIR="${CURRENT_DIR}/tmp/"
+
+# Versions
+GEOIP_VERSION='1.6.6'
+GPERFTOOLS_VERSION='2.4'
+LIBUNWIND_VERSION='1.1'
+
+
+#pkg_geoIP=GeoIP-${GEOIP_VERSION}.tar.gz
+pkg_gperftools=gperftools-${GPERFTOOLS_VERSION}.tar.gz
+pkg_libunwind=libunwind-${LIBUNWIND_VERSION}.tar.gz
+
+#download_and_unpack ${pkg_gperftools} https://github.com/gperftools/gperftools/releases/download/gperftools-${GPERFTOOLS_VERSION}/${pkg_gperftools}
+#download_and_unpack ${pkg_geoIP} https://github.com/maxmind/geoip-api-c/releases/download/v${GEOIP_VERSION}/${pkg_geoIP}
+
+
+# Define functions
+function install_libunwind() {
+    # Remark if not in PATH add LIBUNWIND=${LIBS_DIR}/bin/libunwind to php ./configure
+    local pkg=libunwind-${LIBUNWIND_VERSION}.tar.gz
+    local ts=`date +%s`
+
+    mkdir -p ${BUILD_DIR}
+    pushd ${BUILD_DIR}
+
+    # Get archive
+    download_and_unpack ${pkg} "http://download.savannah.gnu.org/releases/libunwind/${pkg_libunwind}"
+    pushd libunwind-${LIBUNWIND_VERSION}
+
+    echo "Configuring libunwind."
+    ./configure --prefix=${LIBS_DIR}/
+
+    echo "Compiling libunwind."
+    make install
+
+    popd
+    popd
+    rm -rf ${BUILD_DIR}
+}
+
+
+
+# Define functions
+function install_gperftools() {
+    # Remark if not in PATH add GPERFTOOLS=${LIBS_DIR}/bin/re2c to php ./configure
+    local pkg=gperftools-${GPERFTOOLS_VERSION}.tar.gz
+    local ts=`date +%s`
+
+    mkdir -p ${BUILD_DIR}
+    pushd ${BUILD_DIR}
+
+    # Get archive
+    download_and_unpack ${pkg} "https://github.com/gperftools/gperftools/releases/download/gperftools-${GPERFTOOLS_VERSION}/${pkg_gperftools}"
+    pushd gperftools-${GPERFTOOLS_VERSION}
+
+    echo "Configuring gperftools."
+    ./configure --prefix=${LIBS_DIR}/
+
+    echo "Compiling gperftools."
+    make install
+
+    popd
+    popd
+    rm -rf ${BUILD_DIR}
+}
+
+
+# Install php dependencies
+install_libunwind
+install_gperftools
+
+echo "Done compiling libs"
