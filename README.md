@@ -1,31 +1,27 @@
-# Openshift Nginx Cartridge
-Welcome to a life where [nginx](http://nginx.org/) is possible on [openshift](https://www.openshift.com/).
- 
-This cartridge allow you to create a scalable nginx application.
-Combine this with the [boekkooi PHP cartridge](https://github.com/boekkooi/openshift-cartridge-php) and you have a scalable application using the latest versions.
-
+# Openshift nginx - PHP Compile
+Based on https://github.com/boekkooi/openshift-cartridge-nginx and https://github.com/boekkooi/openshift-cartridge-php
 Just create your app using:
 ```BASH
-rhc create-app myapp http://cartreflect-claytondev.rhcloud.com/github/boekkooi/openshift-cartridge-nginx
+rhc create-app myapp https://raw.githubusercontent.com/maxohotm/openshift-nginx-php-compile/master/metadata/manifest.yml
 ```
 
 If you want to install a specific nginx version you can add `--env OPENSHIFT_NGINX_VERSION=<version>` to the command.
 For example to install nginx 1.7.10 you can use:
 ```BASH
-rhc create-app myapp --env OPENSHIFT_NGINX_VERSION=1.7.10 http://cartreflect-claytondev.rhcloud.com/github/boekkooi/openshift-cartridge-nginx
+rhc create-app myapp --env OPENSHIFT_NGINX_VERSION=1.7.10 https://raw.githubusercontent.com/maxohotm/openshift-nginx-php-compile/master/metadata/manifest.yml
 ```
 
 ## Versions
 Currently this cartridge has the following versions:
-- 1.6.2
-- 1.7.10
+- 1.9.7
 
 If you need another version you can compile it yourself and submit a PR to get it integrated.
 
-### Compiling a new version
-To compile a new version you will first need a openshift application.
+### Compiling a new version nginx
+
 ```BASH
-rhc create-app nginx http://cartreflect-claytondev.rhcloud.com/github/boekkooi/openshift-cartridge-nginx
+rhc ssh myapp
+cd 
 ```
 
 Now clone the repository and create a `nginx` folder. Now copy the `usr/compile` directory from [this](https://github.com/boekkooi/openshift-cartridge-nginx) repository.

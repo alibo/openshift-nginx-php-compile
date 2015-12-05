@@ -1,11 +1,14 @@
 Name: nginx
 Cartridge-Short-Name: NGINX
+Cartridge-Version: 0.0.1
+Compatible-Versions:
+- '0.0.1'
+Cartridge-Vendor: maxohotm
 Display-Name: Nginx
+Description: Compile PHP and Nginx
 Version: "1.9.7"
 Versions: ["1.9.7"]
 Website: https://github.com/maxohotm/openshift-nginx-php-compile
-Cartridge-Version: 0.0.1
-Cartridge-Vendor: maxohotm
 Categories:
   - web_framework
   - service
@@ -52,3 +55,4 @@ Endpoints:
       - Frontend:      "/health"
         Backend:       ""
         Options:       { health: true }
+Source-Url: https://github.com/maxohotm/openshift-nginx-php-compile.git
